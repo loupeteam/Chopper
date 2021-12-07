@@ -12,7 +12,7 @@
     <File>ChopGetErrorMsg.c</File>
     <File Description="Exported functions and function blocks">Chopper.fun</File>
     <File>RevisionHistory.txt</File>
-    <File>Chopper.md</File>
+    <File>README.md</File>
   </Files>
   <Dependencies>
     <Dependency ObjectName="VarTools" FromVersion="0.09.0" ToVersion="0.10.9" />
