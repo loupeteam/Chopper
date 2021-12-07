@@ -4,12 +4,17 @@
 	{
 #endif
 
+#ifndef _SG4
+#define _SG4
+#endif
 #include <string.h>
 #include "Chopper.h"
 
 #ifdef __cplusplus
 	};
 #endif
+unsigned long bur_heap_size = 0xFFFFFF;
+#include <stdio.h>
 
 /* ProtoTypes */
 signed long appendTo(UDINT pdest, UDINT dsize, UDINT* offset, UDINT psource, UDINT ssize);
@@ -35,7 +40,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 			continue;
 		
 		//Get snippet value
-		if(pTemplate->snippet[i].pv.dataType != VAR_TYPE_UNDEFINED)
+		if(pTemplate->snippet[i].pv.address == 0)
 			varGetValue((UDINT)&(pTemplate->snippet[i].pv));
 		
 		switch (pTemplate->snippet[i].pv.dataType)
@@ -48,17 +53,48 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 			case VAR_TYPE_WSTRING:
 				{ // Add curly braces to add scope so we can declare a variable 
 					char tempString[pTemplate->snippet[i].pv.length / 2]; // TODO: Remove the need for a temp variable
-					wstring2string(tempString, pTemplate->snippet[i].pv.address, sizeof(tempString));
+					wstring2string((UDINT)tempString, pTemplate->snippet[i].pv.address, sizeof(tempString));
 					// WString can be longer than pv.value and pv.value is a string
-					status = appendTo(pDest, maxDestLength, &offset, tempString, strlen(tempString));
+					status = appendTo(pDest, maxDestLength, &offset, (UDINT)tempString, strlen(tempString));
 				}
 				break;
 			
 			case VAR_TYPE_UNDEFINED:
 				status = appendTo(pDest, maxDestLength, &offset, (UDINT)&("\"undefined\""), sizeof("\"undefined\"") - 1); 
 				break;
-			
+
+			case VAR_TYPE_LREAL:
+				snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(LREAL*)pTemplate->snippet[i].pv.address);
+				status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
+				break;
+
+			case VAR_TYPE_REAL:
+				snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(REAL*)pTemplate->snippet[i].pv.address);
+				status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
+				break;
+
+			case VAR_TYPE_INT:
+				snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(INT*)pTemplate->snippet[i].pv.address);
+				status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
+				break;
+
+			case VAR_TYPE_UINT:
+				snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(UINT*)pTemplate->snippet[i].pv.address);
+				status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
+				break;
+
+			case VAR_TYPE_DINT:
+				snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(DINT *)pTemplate->snippet[i].pv.address);
+				status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
+				break;
+
+			case VAR_TYPE_UDINT:
+				snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(UDINT *)pTemplate->snippet[i].pv.address);
+				status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
+				break;
+
 			default:
+				varGetValue((UDINT)&(pTemplate->snippet[i].pv));
 				status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				break;
 			

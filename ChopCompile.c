@@ -4,6 +4,9 @@
 	{
 #endif
 
+#ifndef _SG4
+#define _SG4
+#endif
 #include <string.h>
 #include "Chopper.h"
 
@@ -91,7 +94,31 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 			memcpy((void*)pTemplate->snippet[pTemplate->iSnippet].pv.name, (void*)(pTemplate->snippet[pTemplate->iSnippet].prefixStart + pTemplate->snippet[pTemplate->iSnippet].prefixLen + dSize), varLen);
 		}
 		pTemplate->snippet[pTemplate->iSnippet].hasVar = 1;
-		
+		varGetInfo(&pTemplate->snippet[pTemplate->iSnippet].pv);
+
+		// TODO: Pull this out into a fn
+		switch (pTemplate->snippet[pTemplate->iSnippet].pv.dataType)
+		{
+		case VAR_TYPE_LREAL:
+			strcpy(pTemplate->snippet[pTemplate->iSnippet].flags, "%f");
+			break;
+		case VAR_TYPE_REAL:
+			strcpy(pTemplate->snippet[pTemplate->iSnippet].flags, "%f");
+			break;
+		case VAR_TYPE_INT:
+			strcpy(pTemplate->snippet[pTemplate->iSnippet].flags, "%d");
+			break;
+		case VAR_TYPE_UINT:
+			strcpy(pTemplate->snippet[pTemplate->iSnippet].flags, "%u");
+			break;
+		case VAR_TYPE_DINT:
+			strcpy(pTemplate->snippet[pTemplate->iSnippet].flags, "%d");
+			break;
+		case VAR_TYPE_UDINT:
+			strcpy(pTemplate->snippet[pTemplate->iSnippet].flags, "%u");
+			break;
+		}
+
 		nextStart = ((UDINT)token) + dSize;
 				
 		// Increment Cache
@@ -109,7 +136,7 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 	/* Prefix {{var>}} Suffix */
 	// Record Start/End pointers
 	pTemplate->snippet[pTemplate->iSnippet].prefixStart = nextStart;
-	pTemplate->snippet[pTemplate->iSnippet].prefixLen = (sourceLen + 1 + (UDINT)&pTemplate->source) - nextStart; // Note: This will always be non zero becuase of NULL char
+	pTemplate->snippet[pTemplate->iSnippet].prefixLen = (sourceLen + 1 + (UDINT)&pTemplate->source) - nextStart; // Note: This will always be non zero because of NULL char
 	pTemplate->snippet[pTemplate->iSnippet].hasVar = 0;
 	memset(&pTemplate->snippet[pTemplate->iSnippet].pv, 0, sizeof(pTemplate->snippet[pTemplate->iSnippet].pv));
 

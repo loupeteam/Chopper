@@ -5,7 +5,7 @@
     <File Description="Exported data types">Types.typ</File>
     <File Description="Exported constants">Constants.var</File>
     <File Description="Compile template">ChopCompile.c</File>
-    <File Description="Render template">ChopRender.c</File>
+    <File Description="Render template">ChopRender.cpp</File>
     <File Description="Compile / render template">Chop.c</File>
     <File Description="Replace variable in template with address">ChopReplace.c</File>
     <File Description="Replaces Variable in template with PV">ChopReplaceVar.c</File>
