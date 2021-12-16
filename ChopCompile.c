@@ -101,6 +101,14 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 				formatEnd = token;
 			}
 			
+			// trim whitespace from variable name, whitespace will cause variable to not be found
+			while(isspace(*varStart)){varStart++}
+			while(isspace(*(varEnd-1)){varEnd--}
+			
+			// trim whitespace from format, whitespace will cause extra space once rendered
+			while(isspace(*prefixStart)){prefixStart++}
+			while(isspace(*(formatEnd-1)){formatEnd--}
+			
 			// Calc lens
 			varLen = varEnd - varStart;
 			formatLen = formatEnd - formatStart;
