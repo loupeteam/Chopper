@@ -44,9 +44,10 @@ void ChopGetPrintFlag(char* dest, UDINT type) {
 		case VAR_TYPE_UDINT:
 			strcpy(dest, "%u");
 			break;
+		default:
+			strcpy(dest, "");
+			break;
 	}
-	
-	// TODO: Add string?
 }
 
 
