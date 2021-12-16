@@ -20,7 +20,7 @@ TYPE
 		pv : varVariable_typ;
 		prefixStart : UDINT;
 		prefixLen : UDINT;
-		flags : STRING[80];
+		flags : STRING[25];
 		hasVar : BOOL;
 	END_STRUCT;
 END_TYPE
