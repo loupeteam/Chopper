@@ -9,12 +9,16 @@
 #endif
 #include <string.h>
 #include "Chopper.h"
+#include <ctype.h>
+#include "Internal.h"
 
 #ifdef __cplusplus
 	};
 #endif
 unsigned long bur_heap_size = 0xFFFFFF;
 #include <stdio.h>
+
+#define min(X, Y) (((X) < (Y)) ? (X) : (Y))
 
 /* ProtoTypes */
 signed long appendTo(UDINT pdest, UDINT dsize, UDINT* offset, UDINT psource, UDINT ssize);
@@ -39,15 +43,23 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 		if(pTemplate->snippet[i].hasVar == 0)
 			continue;
 		
-		//Get snippet value
-		if(pTemplate->snippet[i].pv.address == 0)
+		// Get snippet value if we dont have an address
+		// If var is undefined then we will never get an address to dont waste time trying
+		if(pTemplate->snippet[i].pv.address == 0 && pTemplate->snippet[i].pv.dataType != VAR_TYPE_UNDEFINED)
 			varGetValue((UDINT)&(pTemplate->snippet[i].pv));
 		
 		switch (pTemplate->snippet[i].pv.dataType)
 		{
 			case VAR_TYPE_STRING:
-				// String could be longer than sizeof pv.value 
-				status = appendTo(pDest, maxDestLength, &offset, pTemplate->snippet[i].pv.address, strlen((char*)pTemplate->snippet[i].pv.address));
+				if(pTemplate->snippet[i].flags[0] == '\0') { 
+					int numCharsWritten;
+					numCharsWritten = snprintf((char*)(pDest+offset), (maxDestLength-offset), pTemplate->snippet[i].flags, (char*)pTemplate->snippet[i].pv.address);
+					offset+= min(numCharsWritten, (maxDestLength-offset));
+				}
+				else {
+					// String could be longer than sizeof pv.value 
+					status = appendTo(pDest, maxDestLength, &offset, pTemplate->snippet[i].pv.address, strlen((char*)pTemplate->snippet[i].pv.address));
+				}
 				break;
 			
 			case VAR_TYPE_WSTRING:

@@ -9,6 +9,8 @@
 #endif
 #include <string.h>
 #include "Chopper.h"
+#include <ctype.h>
+#include "Internal.h"
 
 #ifdef __cplusplus
 	};
@@ -22,34 +24,6 @@
 #define DNChars 2
 // Format Deliminator Char
 #define FDChar ','
-
-void ChopGetPrintFlag(char* dest, UDINT type) {
-	switch (type)
-	{
-		case VAR_TYPE_LREAL:
-			strcpy(dest, "%f");
-			break;
-		case VAR_TYPE_REAL:
-			strcpy(dest, "%f");
-			break;
-		case VAR_TYPE_INT:
-			strcpy(dest, "%d");
-			break;
-		case VAR_TYPE_UINT:
-			strcpy(dest, "%u");
-			break;
-		case VAR_TYPE_DINT:
-			strcpy(dest, "%d");
-			break;
-		case VAR_TYPE_UDINT:
-			strcpy(dest, "%u");
-			break;
-		default:
-			strcpy(dest, "");
-			break;
-	}
-}
-
 
 /* Parses string into template */
 signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
@@ -81,15 +55,15 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 	// Init Values 
 	char *token = pTemplate->source; 
 	char *prefixStart = token;
-	char *varStart, *varEnd, *formatStart, *formatEnd, *prefixEnd;
+	char *varStart, *varEnd, *formatStart = 0, *formatEnd = 0, *prefixEnd;
 	UDINT varLen, formatLen, prefixLen;
-	USINT inVar, inFormat, prefixData; // these will be treated as bools
+	USINT inVar = 0, inFormat = 0, prefixData = 0; // these will be treated as bools
 	
-	while(token) {
+	while(*token) {
 		if(*token == DSChar && token[1] == DSChar && !inVar && !inFormat) { // New Variable
 			while(*token == DSChar) token++; // Step past '{', note there may be more than dSize
 			
-			formatEnd = token - DNChars; // Get end of format
+			prefixEnd = token - DNChars; // Get end of prefix
 			varStart = token;
 			
 			inVar = 1;
@@ -103,16 +77,21 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 			}
 			
 			// trim whitespace from variable name, whitespace will cause variable to not be found
-			while(isspace(*varStart)){varStart++}
-			while(isspace(*(varEnd-1)){varEnd--}
+			while(isspace(*varStart)){varStart++;}
+			while(isspace(*(varEnd-1))){varEnd--;}
 			
 			// trim whitespace from format, whitespace will cause extra space once rendered
-			while(isspace(*prefixStart)){prefixStart++}
-			while(isspace(*(formatEnd-1)){formatEnd--}
+			if(formatStart && formatEnd) {
+				while(isspace(*formatStart)){formatStart++;}
+				while(isspace(*(formatEnd-1))){formatEnd--;}
+			}
+			else {
+				formatStart = formatEnd = 0;
+			}
 			
 			// Calc lens
-			varLen = varEnd - varStart;
-			formatLen = formatEnd - formatStart;
+			varLen = varEnd - varStart; // TODO: Restrict to max var size?
+			formatLen = formatEnd - formatStart; // TODO: Restrict to max format size?
 			prefixLen = prefixEnd - prefixStart;
 			
 			// Check space in template
@@ -137,6 +116,7 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 			
 			
 			// Set status for next variable
+			pTemplate->iSnippet++;
 			token += (DNChars-1); // Step past all '}' but one, it will be stepped at the end
 			prefixStart = token+1;
 			inVar = 0;
@@ -145,7 +125,7 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 			formatStart = formatEnd = 0;
 			
 		}
-		else if(*token = FDChar && inVar && !inFormat) { // Start of Format
+		else if(*token == FDChar && inVar && !inFormat) { // Start of Format
 			varEnd = token;
 			formatStart = token+1;
 			
@@ -155,6 +135,8 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 		else if(!prefixData && !inVar && !inFormat) { // Prefix data avialable
 			prefixData = 1; // Not currently used as we always assume there is prefix data as that is how we get null char at end
 		}
+		
+		token++;
 	}
 	
 	if(inVar || inFormat) {
