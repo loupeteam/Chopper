@@ -4,10 +4,6 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/../../../../Temp/Includes/",
-                // "${workspaceFolder}/../includes/**",
-                // "${workspaceFolder}/../includes/loupe/Includes/",
-                // "${workspaceFolder}/Poly/**",
                 "C:/BrAutomation/AS410/AS/gnuinst/V6.3.0/4.9/i686-elf/include"
             ],
             "defines": [
@@ -26,10 +22,7 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/../includes/**",
-                "${workspaceFolder}/../includes/loupe/Includes/",
-                "${workspaceFolder}/Poly/**"
+                "${workspaceFolder}/**"
             ],
             "defines": [],
             "macFrameworkPath": [
