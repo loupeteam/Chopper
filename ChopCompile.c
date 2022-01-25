@@ -25,6 +25,8 @@
 // Format Deliminator Char
 #define FDChar ','
 
+#define min(X, Y) (((X) < (Y)) ? (X) : (Y))
+
 /* Parses string into template */
 signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 {
@@ -90,8 +92,8 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 			}
 			
 			// Calc lens
-			varLen = varEnd - varStart; // TODO: Restrict to max var size?
-			formatLen = formatEnd - formatStart; // TODO: Restrict to max format size?
+			varLen = min(varEnd - varStart, sizeof(pTemplate->snippet[0].pv.name));
+			formatLen = min(formatEnd - formatStart, sizeof(pTemplate->snippet[0].flags));
 			prefixLen = prefixEnd - prefixStart;
 			
 			// Check space in template
