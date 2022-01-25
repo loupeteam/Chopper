@@ -4,12 +4,28 @@
 	{
 #endif
 
+#ifndef _SG4
+#define _SG4
+#endif
 #include <string.h>
 #include "Chopper.h"
+#include <ctype.h>
+#include "Internal.h"
 
 #ifdef __cplusplus
 	};
 #endif
+
+// Deliminator Start Char
+#define DSChar '{'
+// Deliminator End Char
+#define DEChar '}'
+// Deliminator Number of Characters
+#define DNChars 2
+// Format Deliminator Char
+#define FDChar ','
+
+#define min(X, Y) (((X) < (Y)) ? (X) : (Y))
 
 /* Parses string into template */
 signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
@@ -20,14 +36,6 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 	Chop_Template_typ* pTemplate = (Chop_Template_typ*)_pTemplate;
 	pTemplate->iSnippet = 0; 
 	pTemplate->compiled = 0;
-	
-	const char ds[3] = "{{"; //Delimiter Start Symbol
-	const char de[3] = "}}"; //Delimiter End Symbol
-	const UDINT dSize = 2; //Delimiter Size
-	
-	//const char es[4] = "{{{"; //Escaped Start Symbol (must start with ds)
-	//const char ee[4] = "}}}"; //Escaped End Symbol (must start with de)
-	//const UDINT eSize = 3; //Escaped Size
 	
 	UINT sourceLen;
 	
@@ -47,73 +55,111 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 	
 	/* Build Template */
 	// Init Values 
-	char *token; 
-	UDINT nextStart = (UDINT)&pTemplate->source;
-	USINT varLen;
+	char *token = pTemplate->source; 
+	char *prefixStart = token;
+	char *varStart, *varEnd, *formatStart = 0, *formatEnd = 0, *prefixEnd;
+	UDINT varLen, formatLen, prefixLen;
+	USINT inVar = 0, inFormat = 0, prefixData = 0; // these will be treated as bools
 	
-	token = strstr((char*)&pTemplate->source,ds); // Get first Token
-
-	// This while loop num of iterations is limited by CHOP_TEMPLATE_MAX_VARIABLES
-	// May cause cycle time violations. Possible change to for loop with max iterations
-	while (token != NULL) 
-	{
-		// Check for Cache full
-		if(pTemplate->iSnippet >= CHOP_TEMPLATE_MAX_VARIABLES)
-			return CHOP_ERR_TEMPLATE_FULL;
+	while(*token) {
+		if(*token == DSChar && token[1] == DSChar && !inVar && !inFormat) { // New Variable
+			while(*token == DSChar) token++; // Step past '{', note there may be more than dSize
 			
-		/* In string */
-		/* Prefix >{{{var}}} Suffix*/
-		
-		// Use inner most deliminator
-		while (token[dSize] == '{') // Assumes Delimiter is curly braces
-		{
-			// For case of {{{{}}
-			token++;
+			prefixEnd = token - DNChars; // Get end of prefix
+			varStart = token;
+			
+			inVar = 1;
+		}
+		else if(*token == DEChar && token[1] == DEChar && (inVar || inFormat)) { // End of Variable && Format
+			if(inVar) {
+				varEnd = token;
+			}
+			else { //inFormat
+				formatEnd = token;
+			}
+			
+			// trim whitespace from variable name, whitespace will cause variable to not be found
+			while(isspace(*varStart)){varStart++;}
+			while(isspace(*(varEnd-1))){varEnd--;}
+			
+			// trim whitespace from format, whitespace will cause extra space once rendered
+			if(formatStart && formatEnd) {
+				while(isspace(*formatStart)){formatStart++;}
+				while(isspace(*(formatEnd-1))){formatEnd--;}
+			}
+			else {
+				formatStart = formatEnd = 0;
+			}
+			
+			// Calc lens
+			varLen = min(varEnd - varStart, sizeof(pTemplate->snippet[0].pv.name));
+			formatLen = min(formatEnd - formatStart, sizeof(pTemplate->snippet[0].flags));
+			prefixLen = prefixEnd - prefixStart;
+			
+			// Check space in template
+			if(pTemplate->iSnippet >= CHOP_TEMPLATE_MAX_VARIABLES)
+				return CHOP_ERR_TEMPLATE_FULL;
+			
+			// --- Save variable ---
+			pTemplate->snippet[pTemplate->iSnippet].prefixStart = prefixStart;
+			pTemplate->snippet[pTemplate->iSnippet].prefixLen = prefixLen;
+			memset(&pTemplate->snippet[pTemplate->iSnippet].pv, 0, sizeof(pTemplate->snippet[pTemplate->iSnippet].pv)); // Clear variable 
+			memcpy((void*)pTemplate->snippet[pTemplate->iSnippet].pv.name, varStart, varLen);
+			pTemplate->snippet[pTemplate->iSnippet].hasVar = 1;
+			varGetInfo(&pTemplate->snippet[pTemplate->iSnippet].pv); // So we have the type
+			
+			if(formatLen > 0) { // Has format defined
+				memcpy((void*)pTemplate->snippet[pTemplate->iSnippet].flags, formatStart, formatLen);
+				pTemplate->snippet[pTemplate->iSnippet].flags[formatLen] = 0;
+			}
+			else { // Use defualt format for var type
+				ChopGetPrintFlag(pTemplate->snippet[pTemplate->iSnippet].flags, pTemplate->snippet[pTemplate->iSnippet].pv.dataType);
+			}
+			
+			
+			// Set status for next variable
+			pTemplate->iSnippet++;
+			token += (DNChars-1); // Step past all '}' but one, it will be stepped at the end
+			prefixStart = token+1;
+			inVar = 0;
+			inFormat = 0;
+			prefixData = 0;
+			formatStart = formatEnd = 0;
+			
+		}
+		else if(*token == FDChar && inVar && !inFormat) { // Start of Format
+			varEnd = token;
+			formatStart = token+1;
+			
+			inVar = 0;
+			inFormat = 1;
+		}
+		else if(!prefixData && !inVar && !inFormat) { // Prefix data avialable
+			prefixData = 1; // Not currently used as we always assume there is prefix data as that is how we get null char at end
 		}
 		
-		// Record Start/End offsets
-		pTemplate->snippet[pTemplate->iSnippet].prefixStart = nextStart;
-		pTemplate->snippet[pTemplate->iSnippet].prefixLen = ((UDINT)token - (UDINT)nextStart);
-
-		// Get end braces after var
-		token = strstr(token+dSize, de);
-		
-		/* Prefix {{var>}} Prefix*/
-		
-		if(token == NULL) return CHOP_ERR_NO_END_OF_VAR;
-		
-		// In Variable
-		varLen = (UDINT)token - (pTemplate->snippet[pTemplate->iSnippet].prefixStart + pTemplate->snippet[pTemplate->iSnippet].prefixLen + dSize); // Current position pointer - End position pointer
-				
-		// Cache Variable
-		memset(&pTemplate->snippet[pTemplate->iSnippet].pv, 0, sizeof(pTemplate->snippet[pTemplate->iSnippet].pv)); // Clear variable 
-		if(varLen > 0) {
-			memcpy((void*)pTemplate->snippet[pTemplate->iSnippet].pv.name, (void*)(pTemplate->snippet[pTemplate->iSnippet].prefixStart + pTemplate->snippet[pTemplate->iSnippet].prefixLen + dSize), varLen);
-		}
-		pTemplate->snippet[pTemplate->iSnippet].hasVar = 1;
-		
-		nextStart = ((UDINT)token) + dSize;
-				
-		// Increment Cache
-		pTemplate->iSnippet++;
-		// Get next ds
-		token = strstr(token+dSize, ds);
+		token++;
 	}
 	
+	if(inVar || inFormat) {
+		return CHOP_ERR_NO_END_OF_VAR;
+	}
+	
+	//if(prefixData) {
 	// Check for Cache full
 	if(pTemplate->iSnippet >= CHOP_TEMPLATE_MAX_VARIABLES)
 		return CHOP_ERR_TEMPLATE_FULL;
 
 	// Copy Trailing string after last var
 	// This will contain '\0'
-	/* Prefix {{var>}} Suffix */
-	// Record Start/End pointers
-	pTemplate->snippet[pTemplate->iSnippet].prefixStart = nextStart;
-	pTemplate->snippet[pTemplate->iSnippet].prefixLen = (sourceLen + 1 + (UDINT)&pTemplate->source) - nextStart; // Note: This will always be non zero becuase of NULL char
+	pTemplate->snippet[pTemplate->iSnippet].prefixStart = prefixStart;
+	pTemplate->snippet[pTemplate->iSnippet].prefixLen = token - prefixStart + 1; // Note: This needs to be non zero because we want to include the NULL char
 	pTemplate->snippet[pTemplate->iSnippet].hasVar = 0;
 	memset(&pTemplate->snippet[pTemplate->iSnippet].pv, 0, sizeof(pTemplate->snippet[pTemplate->iSnippet].pv));
-
+	pTemplate->snippet[pTemplate->iSnippet].flags[0] = '\0';
 	pTemplate->iSnippet++;
+	
+	//}
 	
 	pTemplate->compiled = 1;
 
