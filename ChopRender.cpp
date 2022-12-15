@@ -51,7 +51,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 		switch (pTemplate->snippet[i].pv.dataType)
 		{
 			case VAR_TYPE_STRING:
-				if(pTemplate->snippet[i].flags[0] == '\0') { 
+				if(pTemplate->snippet[i].flags[0] != '\0') { 
 					int numCharsWritten;
 					numCharsWritten = snprintf((char*)(pDest+offset), (maxDestLength-offset), pTemplate->snippet[i].flags, (char*)pTemplate->snippet[i].pv.address);
 					offset+= min(numCharsWritten, (maxDestLength-offset));
