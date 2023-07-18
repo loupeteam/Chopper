@@ -14,6 +14,8 @@
 
 /* Gets the defualt printf flag for type and copies it into pDest */
 void ChopGetPrintFlag(char* dest, UDINT type) {
+	// Note we dont generate a flag for each type
+	// Only types that NEED a flag to render. Types that do not need a flag or dont support a flag will instead have an empty string
 	switch (type)
 	{
 		case VAR_TYPE_LREAL:

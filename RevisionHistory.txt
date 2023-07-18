@@ -1,3 +1,5 @@
+1.03.1 - Fixed bug when rendering STRINGs 
+
 1.03.0 - Add support for manual formatting
 
 1.02.2 - Update dependencies
