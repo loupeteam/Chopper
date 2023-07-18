@@ -34,7 +34,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 	
 	if(pTemplate->compiled == 0) return CHOP_ERR_NOT_COMPILED;
 	
-	//Read Var
+	//Read Var 
 	for(i = 0; i < pTemplate->iSnippet; i++){		
 		// Append prefix
 		status = appendTo(pDest, maxDestLength, &offset, pTemplate->snippet[i].prefixStart, pTemplate->snippet[i].prefixLen);
@@ -54,7 +54,13 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 				if(pTemplate->snippet[i].flags[0] != '\0') { 
 					int numCharsWritten;
 					numCharsWritten = snprintf((char*)(pDest+offset), (maxDestLength-offset), pTemplate->snippet[i].flags, (char*)pTemplate->snippet[i].pv.address);
-					offset+= min(numCharsWritten, (maxDestLength-offset));
+					if (numCharsWritten < 0) {
+						numCharsWritten = 0;
+						status = CHOP_ERR_INTERNAL;	
+					}
+					else {
+						offset+= min(numCharsWritten, (maxDestLength-offset));	
+					}
 				}
 				else {
 					// String could be longer than sizeof pv.value 
