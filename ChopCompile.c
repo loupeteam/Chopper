@@ -92,8 +92,8 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 			}
 			
 			// Calc lens
-			varLen = min(varEnd - varStart, sizeof(pTemplate->snippet[0].pv.name));
-			formatLen = min(formatEnd - formatStart, sizeof(pTemplate->snippet[0].flags));
+			varLen = min(varEnd - varStart, sizeof(pTemplate->snippet[0].pv.name)-1);
+			formatLen = min(formatEnd - formatStart, sizeof(pTemplate->snippet[0].flags)-1);
 			prefixLen = prefixEnd - prefixStart;
 			
 			// Check space in template
