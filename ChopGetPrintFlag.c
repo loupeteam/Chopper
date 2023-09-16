@@ -88,6 +88,7 @@ plcbit ChopGetDefaultFormatter(plcstring* dest, unsigned long type) {
 //	%	A % followed by another % character will write a single % to the stream.	%
 
 /* Gets the defualt printf flag for type and copies it into pDest */
+// %[flags][width][.precision][length]specifier
 plcbit ChopVerifyFormatter(plcstring* src, unsigned long type) {
 	char* format = src;
 	
@@ -97,17 +98,17 @@ plcbit ChopVerifyFormatter(plcstring* src, unsigned long type) {
 	if(*format != '%') return 0;
 	format++;
 	
-	
-
 	// Check Flags
-	if(*format == '+'
-		|| *format == '-'
-		|| *format == ' '
-		|| *format == '#'
-		// || *format == '\'' This is not currently supportted in C standard. Maybe one day. 
+	// Multiple flags are acceptable
+	// Some flags with some specifiers and duplicate flags are not valid 
+	//	but in this case its just a warning
+	while(*format == '+' 
+		|| *format == '-' 
+		|| *format == ' ' 
+		|| *format == '#' 
+		//*format == '\'' // This is not currently supportted in C standard. Maybe one day. 
 	|| *format == '0') {
-		// TODO: Additional checks can be done here
-		format++;	
+		format++;
 	}
 	
 	// Check Width
