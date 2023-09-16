@@ -88,7 +88,7 @@ plcbit ChopGetDefaultFormatter(plcstring* dest, unsigned long type) {
 //	%	A % followed by another % character will write a single % to the stream.	%
 
 /* Gets the defualt printf flag for type and copies it into pDest */
-plcbit ChopVerifyFormatter(char* src, UDINT type) {
+plcbit ChopVerifyFormatter(plcstring* src, unsigned long type) {
 	char* format = src;
 	
 	if(!format) return 0;
