@@ -171,7 +171,7 @@ signed long appendTo(UDINT pdest, UDINT dsize, UDINT* poffset, UDINT psource, UD
 	if((pdest == 0)
 		|| (poffset == 0)
 		|| (psource == 0))
-		return CHOP_ERR_INTERNAL;
+		return CHOP_ERR_INTERNAL; // Note: This returns an INTERNAL instead of Invalid input error because it a funtion that is only called internally 
 	
 	if(ssize == 0) return 0;
 	
