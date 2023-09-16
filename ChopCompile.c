@@ -113,7 +113,7 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 				pTemplate->snippet[pTemplate->iSnippet].flags[formatLen] = 0;
 			}
 			else { // Use defualt format for var type
-				ChopGetPrintFormatter(pTemplate->snippet[pTemplate->iSnippet].flags, pTemplate->snippet[pTemplate->iSnippet].pv.dataType);
+				ChopGetDefaultFormatter(pTemplate->snippet[pTemplate->iSnippet].flags, pTemplate->snippet[pTemplate->iSnippet].pv.dataType);
 			}
 			
 			
