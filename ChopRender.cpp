@@ -63,7 +63,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 							status = CHOP_ERR_INTERNAL;	
 						}
 						else {
-							offset+= min(numCharsWritten, (maxDestLength-offset));	
+							offset += min(numCharsWritten, (maxDestLength-offset));	
 						}
 					}
 				}
