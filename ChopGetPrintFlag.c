@@ -104,7 +104,7 @@ plcbit ChopVerifyFormatter(char* src, UDINT type) {
 		|| *format == '-'
 		|| *format == ' '
 		|| *format == '#'
-		|| *format == '\''
+		// || *format == '\'' This is not currently supportted in C standard. Maybe one day. 
 	|| *format == '0') {
 		// TODO: Additional checks can be done here
 		format++;	
@@ -116,7 +116,7 @@ plcbit ChopVerifyFormatter(char* src, UDINT type) {
 		if(*format == '*') return 0; // We cant support this
 	}
 	
-	// Check percision
+	// Check precision
 	if(*format == '.') {
 		format++; // Move past '.'
 		while(isdigit(*format)) format++;

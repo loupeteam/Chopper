@@ -141,7 +141,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 					status = CHOP_ERR_INTERNAL;	
 				}
 				else {
-					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(UDINT *)pTemplate->snippet[i].pv.address);
+					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(UDINT*)pTemplate->snippet[i].pv.address);
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				break;
