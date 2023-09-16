@@ -11,6 +11,4 @@
 // include needed .h files
 #include <string.h>
 
-void ChopGetPrintFormatter(char* dest, UDINT type);
-
 #endif

@@ -58,6 +58,13 @@ FUNCTION ChopGetErrorMsg : DINT
 	END_VAR
 END_FUNCTION
 
+FUNCTION ChopGetDefaultFormatter : BOOL
+	VAR_INPUT
+		dest : STRING[80];
+		type : UDINT; (*VAR_TYPE_enum*)
+	END_VAR
+END_FUNCTION
+
 FUNCTION ChopVerifyFormatter : BOOL
 	VAR_INPUT
 		pSrc : STRING[80];
