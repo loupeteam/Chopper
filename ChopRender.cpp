@@ -54,7 +54,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 				if(pTemplate->snippet[i].flags[0] != '\0') { 
 					int numCharsWritten;
 					if(!ChopVerifyFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType)) {
-						status = CHOP_ERR_INTERNAL;	
+						status = CHOP_ERR_INVALID_FORMATTER+i;	
 					}
 					else {
 						numCharsWritten = snprintf((char*)(pDest+offset), (maxDestLength-offset), pTemplate->snippet[i].flags, (char*)pTemplate->snippet[i].pv.address);
@@ -88,7 +88,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 
 			case VAR_TYPE_LREAL:
 				if(!ChopVerifyFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType)) {
-					status = CHOP_ERR_INTERNAL;	
+					status = CHOP_ERR_INVALID_FORMATTER+i;
 				}
 				else {
 					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(LREAL*)pTemplate->snippet[i].pv.address);
@@ -98,7 +98,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 
 			case VAR_TYPE_REAL:
 				if(!ChopVerifyFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType)) {
-					status = CHOP_ERR_INTERNAL;	
+					status = CHOP_ERR_INVALID_FORMATTER+i;
 				}
 				else {
 					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(REAL*)pTemplate->snippet[i].pv.address);
@@ -108,7 +108,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 
 			case VAR_TYPE_INT:
 				if(!ChopVerifyFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType)) {
-					status = CHOP_ERR_INTERNAL;	
+					status = CHOP_ERR_INVALID_FORMATTER+i;
 				}
 				else {
 					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(INT*)pTemplate->snippet[i].pv.address);
@@ -118,7 +118,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 
 			case VAR_TYPE_UINT:
 				if(!ChopVerifyFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType)) {
-					status = CHOP_ERR_INTERNAL;	
+					status = CHOP_ERR_INVALID_FORMATTER+i;
 				}
 				else {
 					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(UINT*)pTemplate->snippet[i].pv.address);
@@ -128,7 +128,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 
 			case VAR_TYPE_DINT:
 				if(!ChopVerifyFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType)) {
-					status = CHOP_ERR_INTERNAL;	
+					status = CHOP_ERR_INVALID_FORMATTER+i;
 				}
 				else {
 					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(DINT *)pTemplate->snippet[i].pv.address);
@@ -138,7 +138,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 
 			case VAR_TYPE_UDINT:
 				if(!ChopVerifyFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType)) {
-					status = CHOP_ERR_INTERNAL;	
+					status = CHOP_ERR_INVALID_FORMATTER+i;
 				}
 				else {
 					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(UDINT*)pTemplate->snippet[i].pv.address);
