@@ -88,7 +88,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 
 			case VAR_TYPE_LREAL:
 				if(!ChopVerifyFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType)) {
-					status = CHOP_ERR_INVALID_FORMATTER+i;
+					status = CHOP_ERR_INVALID_FORMATTER + i;
 				}
 				else {
 					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(LREAL*)pTemplate->snippet[i].pv.address);
