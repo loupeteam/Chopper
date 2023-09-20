@@ -142,6 +142,7 @@ plcbit ChopVerifyFormatter(plcstring* src, unsigned long type) {
 		if(*format == 'h' || *format == 'l') format++;
 	}
 	
+	// Check Specifier 
 	switch (type)
 	{
 		case VAR_TYPE_LREAL:
