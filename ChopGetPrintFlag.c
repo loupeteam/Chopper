@@ -5,6 +5,7 @@
 #endif
 
 #include <string.h>
+#include <ctype.h>
 #include "Chopper.h"
 
 #ifdef __cplusplus
