@@ -1,3 +1,7 @@
+1.04.0 - Add support for error checking on manual foramtting
+	   - Add ChopGetDefaultFormatter
+	   - Add ChopVerifyFormatter
+
 1.03.2 - Handle snprintf returning a negative value
 
 1.03.1 - Fixed bug when rendering STRINGs 

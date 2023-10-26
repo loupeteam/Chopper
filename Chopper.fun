@@ -48,11 +48,26 @@ FUNCTION ChopReplaceVar : DINT
 		pVarName : UDINT;
 	END_VAR
 END_FUNCTION
+(*--- Utility Fns ---*)
 
 FUNCTION ChopGetErrorMsg : DINT
 	VAR_INPUT
 		pDest : UDINT;
 		maxDestLength : UDINT;
 		errorID : DINT;
+	END_VAR
+END_FUNCTION
+
+FUNCTION ChopGetDefaultFormatter : BOOL
+	VAR_INPUT
+		dest : STRING[80];
+		type : UDINT; (*VAR_TYPE_enum*)
+	END_VAR
+END_FUNCTION
+
+FUNCTION ChopVerifyFormatter : BOOL
+	VAR_INPUT
+		pSrc : STRING[80];
+		type : UDINT; (*VAR_TYPE_enum*)
 	END_VAR
 END_FUNCTION

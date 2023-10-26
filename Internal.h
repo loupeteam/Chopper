@@ -11,6 +11,4 @@
 // include needed .h files
 #include <string.h>
 
-void ChopGetPrintFlag(char* dest, UDINT type);
-
 #endif
