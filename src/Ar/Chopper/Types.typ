@@ -1,3 +1,12 @@
+(*
+ * File: Types.typ
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of Chopper, licensed under the MIT License.
+ * 
+ *)
+
 
 TYPE
 	Chop_Status_Enum : 
