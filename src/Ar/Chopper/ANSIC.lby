@@ -13,7 +13,6 @@
     <File>ChopGetErrorMsg.c</File>
     <File>ChopGetPrintFlag.c</File>
     <File Description="Exported functions and function blocks">Chopper.fun</File>
-    <File>RevisionHistory.txt</File>
     <File>README.md</File>
   </Files>
   <Dependencies>
