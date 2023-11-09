@@ -37,7 +37,7 @@ signed long ChopReplace(UDINT _pTemplate, UDINT pTag, UDINT Address, UDINT Type)
 		if(strcmp(pTemplate->snippet[i].pv.name, (char*)pTag) == 0) {
 			pTemplate->snippet[i].pv.address = Address;
 			pTemplate->snippet[i].pv.dataType  = Type;
-			ChopGetPrintFlag(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType);
+			ChopGetDefaultFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType);
 		}
 	}
 	

@@ -17,7 +17,8 @@ TYPE
 		CHOP_ERR_NO_END_OF_VAR, (*Check source vars are surrounded by '{{}}'*)
 		CHOP_ERR_NOT_COMPILED,
 		CHOP_ERR_DEST_LENGTH, (*50005*)
-		CHOP_ERR_INTERNAL
+		CHOP_ERR_INTERNAL,
+		CHOP_ERR_INVALID_FORMATTER := 51000 (*51XXX Invalid variable format XXX represents the index of the variable *)
 		);
 	Chop_Template_typ : 	STRUCT 
 		snippet : ARRAY[0..CHOP_TEMPLATE_MAI_VARIABLES]OF Chop_Template_Variable_typ;

@@ -43,7 +43,7 @@ signed long ChopReplaceVar(UDINT _pTemplate, UDINT pTag, UDINT pVarName)
 			// Get variable address and type
 			varGetInfo((UDINT)&pTemplate->snippet[i].pv);
 			
-			ChopGetPrintFlag(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType);
+			ChopGetDefaultFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType);
 		}
 	}
 	
