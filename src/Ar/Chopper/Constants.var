@@ -1,0 +1,15 @@
+(*
+ * File: Constants.var
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of Chopper, licensed under the MIT License.
+ * 
+ *)
+
+VAR CONSTANT
+	CHOP_NUM_FLAG_LEN : USINT := 30;
+	CHOP_TEMPLATE_MAX_VARIABLES : USINT := 100;
+	CHOP_TEMPLATE_MAI_VARIABLES : USINT := CHOP_TEMPLATE_MAX_VARIABLES-1;
+	CHOP_TEMPLATE_STRLEN_SOURCE : UINT := 5000;
+END_VAR
