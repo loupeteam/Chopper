@@ -92,8 +92,9 @@
     <LibraryObject Name="Arnc0man" Source="Libraries.Motion.Arnc0man.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="Arnc0mx" Source="Libraries.Motion.Arnc0mx.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="TRF_LIB" Source="Libraries.Motion.TRF_LIB.lby" Memory="UserROM" Language="binary" Debugging="true" />
-    <LibraryObject Name="chopper" Source="Libraries.Loupe.chopper.lby" Memory="UserROM" Language="ANSIC" Debugging="true" />
+    <LibraryObject Name="chopper" Source="Libraries.Loupe.chopper.lby" Memory="UserROM" Language="ANSIC" AdditionalLibraryDirectories="\..\..\src\Ar\Chopper\lib\SG4\Arm\" AdditionalLibraries="AR" Debugging="false" />
     <LibraryObject Name="vartools" Source="Libraries.Loupe.vartools.lby" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="stringext" Source="Libraries.Loupe.stringext.lby" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="tlsf" Source="Libraries.Loupe.tlsf.lby" Memory="None" Language="ANSIC" Debugging="true" />
   </Libraries>
 </SwConfiguration>
