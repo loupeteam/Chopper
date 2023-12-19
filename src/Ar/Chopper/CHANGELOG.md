@@ -1,4 +1,7 @@
-1.04.0 - Add support for error checking on manual foramtting
+1.05.0 - Add tslf support 
+	   - Fix some render calls not being thread-safe 
+
+1.04.0 - Add support for error checking on manual formatting
 	   - Add ChopGetDefaultFormatter
 	   - Add ChopVerifyFormatter
 
