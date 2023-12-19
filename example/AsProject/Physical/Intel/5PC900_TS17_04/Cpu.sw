@@ -1,5 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
-<SwConfiguration xmlns="http://br-automation.co.at/AS/SwConfiguration" CpuAddress="SL1">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio FileVersion="4.9"?>
+<SwConfiguration CpuAddress="SL1" xmlns="http://br-automation.co.at/AS/SwConfiguration">
   <TaskClass Name="Cyclic#1">
     <Task Name="Default" Source="Programs.Default.prg" Memory="UserROM" Language="ANSIC" Debugging="true" />
   </TaskClass>
@@ -77,8 +78,9 @@
     <LibraryObject Name="Arnc0mx" Source="Libraries.Motion.Arnc0mx.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="TRF_LIB" Source="Libraries.Motion.TRF_LIB.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="powerlnk" Source="" Memory="UserROM" Language="Binary" Debugging="true" />
-    <LibraryObject Name="chopper" Source="Libraries.Loupe.chopper.lby" Memory="UserROM" Language="ANSIC" Debugging="true" />
+    <LibraryObject Name="chopper" Source="Libraries.Loupe.chopper.lby" Memory="UserROM" Language="ANSIC" AdditionalLibraryDirectories="\..\..\src\Ar\Chopper\lib\SG4\" AdditionalLibraries="AR" Debugging="false" />
     <LibraryObject Name="vartools" Source="Libraries.Loupe.vartools.lby" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="stringext" Source="Libraries.Loupe.stringext.lby" Memory="UserROM" Language="Binary" Debugging="true" />
+    <LibraryObject Name="tlsf" Source="Libraries.Loupe.tlsf.lby" Memory="None" Language="ANSIC" Debugging="true" />
   </Libraries>
 </SwConfiguration>

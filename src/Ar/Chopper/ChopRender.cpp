@@ -24,7 +24,6 @@
 #ifdef __cplusplus
 	};
 #endif
-unsigned long bur_heap_size = 0xFFFFFF;
 #include <stdio.h>
 
 #define min(X, Y) (((X) < (Y)) ? (X) : (Y))
