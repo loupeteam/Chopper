@@ -66,7 +66,7 @@
     <LibraryObject Name="AsBrWStr" Source="Libraries._AS.AsBrWStr.lby" Memory="UserROM" Language="binary" Debugging="true" />
     <LibraryObject Name="vartools" Source="Libraries.Loupe.vartools.lby" Memory="UserROM" Language="Binary" Debugging="true" />
     <LibraryObject Name="stringext" Source="Libraries.Loupe.stringext.lby" Memory="UserROM" Language="Binary" Debugging="true" />
-    <LibraryObject Name="Chopper" Source="Libraries.Loupe.Chopper.lby" Memory="None" Language="ANSIC" AdditionalLibraryDirectories="C:\Projects\Chopper\src\Ar\Chopper\lib\SG4\" AdditionalLibraries="AR" Debugging="true" />
+    <LibraryObject Name="Chopper" Source="Libraries.Loupe.Chopper.lby" Memory="UserROM" Language="ANSIC" AdditionalLibraryDirectories="C:\Projects\Chopper\src\Ar\Chopper\lib\SG4\" AdditionalLibraries="AR" Debugging="true" />
     <LibraryObject Name="tlsf" Source="Libraries.Loupe.tlsf.lby" Memory="None" Language="ANSIC" Debugging="true" />
   </Libraries>
 </SwConfiguration>

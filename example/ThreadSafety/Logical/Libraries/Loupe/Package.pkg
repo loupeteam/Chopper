@@ -4,7 +4,7 @@
   <Objects>
     <Object Type="Library" Language="Binary">vartools</Object>
     <Object Type="Library" Language="Binary">stringext</Object>
-    <Object Type="Library" Language="ANSIC" Reference="true">C:\Projects\Chopper\src\Ar\Chopper\ANSIC.lby</Object>
-    <Object Type="Library" Language="ANSIC" Reference="true">C:\Projects\Chopper\example\AsProject\Logical\Libraries\Loupe\tlsf\ANSIC.lby</Object>
+    <Object Type="Library" Language="ANSIC" Reference="true">..\..\src\Ar\Chopper\ANSIC.lby</Object>
+    <Object Type="Library" Language="ANSIC" Reference="true">..\AsProject\Logical\Libraries\Loupe\tlsf\ANSIC.lby</Object>
   </Objects>
 </Package>
