@@ -1,0 +1,17 @@
+VAR
+	val : LREAL;
+	value : LREAL;
+	iMax : UDINT;
+	divisior : DINT;
+	i : DINT;
+	chopperInst : Chopper;
+	chopperOutput : STRING[4999];
+	chopperSource : STRING[4999];
+	chopperTemplate : Chop_Template_typ;
+	modulo : DINT;
+	currentTimeDint : DINT;
+	currentTime : LREAL;
+	diffTime : DINT;
+	startTime : DINT;
+	stop : BOOL;
+END_VAR

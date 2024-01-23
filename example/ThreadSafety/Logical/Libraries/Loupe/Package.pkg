@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio FileVersion="4.9"?>
+<Package xmlns="http://br-automation.co.at/AS/Package">
+  <Objects>
+    <Object Type="Library" Language="Binary">vartools</Object>
+    <Object Type="Library" Language="Binary">stringext</Object>
+    <Object Type="Library" Language="ANSIC" Reference="true">C:\Projects\Chopper\src\Ar\Chopper\ANSIC.lby</Object>
+    <Object Type="Library" Language="ANSIC" Reference="true">C:\Projects\Chopper\example\AsProject\Logical\Libraries\Loupe\tlsf\ANSIC.lby</Object>
+  </Objects>
+</Package>
