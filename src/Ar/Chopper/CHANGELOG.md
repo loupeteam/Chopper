@@ -1,4 +1,4 @@
-1.06.0 - Add AsBrStr dependency for thread-safe float/double to string conversion
+1.05.1 - Make float/double to string conversion thread-safe
 
 1.05.0 - Add tslf support 
 	   - Fix some render calls not being thread-safe 
