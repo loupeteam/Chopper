@@ -99,7 +99,9 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 					status = CHOP_ERR_INVALID_FORMATTER + i;
 				}
 				else {
-					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(LREAL*)pTemplate->snippet[i].pv.address);
+					// demote double to float so we can use a thread-safe string conversion function
+					// this ignores formatter flags
+					brsftoa((REAL)*(LREAL*)pTemplate->snippet[i].pv.address, (UDINT)&pTemplate->snippet[i].pv.value);
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				break;
@@ -109,7 +111,9 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 					status = CHOP_ERR_INVALID_FORMATTER+i;
 				}
 				else {
-					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(REAL*)pTemplate->snippet[i].pv.address);
+					// use a thread-safe string conversion function
+					// this ignores formatter flags
+					brsftoa(*(REAL*)pTemplate->snippet[i].pv.address, (UDINT)&pTemplate->snippet[i].pv.value);
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				break;
