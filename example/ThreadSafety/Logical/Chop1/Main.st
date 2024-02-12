@@ -1,34 +1,26 @@
 
 PROGRAM _INIT
 	
+	// Chop1 exists to interrupt the chop calls happening in Chop5
+	// Use the watch window to set "interrupt" to TRUE to test this case
+	// This tests thread-safety of ChopRender
+	
 	chopperInst.pDest := ADR(chopperOutput);
 	chopperInst.maxDestLength := SIZEOF(chopperOutput);
 	chopperInst.pSource := ADR(chopperSource);
 	chopperInst.pTemplate := ADR(chopperTemplate);
 	
 	chopperSource := '{{Chop1:value}}';
-	//chopperSource := '{"field":"{{Chop1:valueDint}}"}';
 
-	
-	iMax := 1;
+	iMax := 0;
 	value := 123456789123456789.876543210;
-	valueDint := 123456;
-	
-	// compile
-	//chopperInst();
+	interrupt := FALSE;	// avoid instant faults during testing
 	 
 END_PROGRAM
 
 PROGRAM _CYCLIC
 
 	FOR i:=0 TO iMax DO
-		IF (i MOD 2) = 0 THEN
-			value := value + 1;
-			valueDint := valueDint + 1;
-		ELSE
-			value := value - 1;
-			valueDint := valueDint - 1;
-		END_IF
 			
 		IF interrupt THEN
 			chopperInst();
@@ -39,7 +31,8 @@ PROGRAM _CYCLIC
 END_PROGRAM
 
 PROGRAM _EXIT
-	(* Insert code here *)
+	
+	
 	 
 END_PROGRAM
 
