@@ -1,6 +1,6 @@
 /* Automation Studio generated header file */
 /* Do not edit ! */
-/* vartools 0.11.3 */
+/* vartools 0.11.4 */
 
 #ifndef _VARTOOLS_
 #define _VARTOOLS_
@@ -9,7 +9,7 @@ extern "C"
 {
 #endif
 #ifndef _vartools_VERSION
-#define _vartools_VERSION 0.11.3
+#define _vartools_VERSION 0.11.4
 #endif
 
 #include <bur/plctypes.h>

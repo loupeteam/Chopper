@@ -1,13 +1,11 @@
-(********************************************************************
- * COPYRIGHT --  
- ********************************************************************
- * Library: VarInfo
- * File: VarInfo.fun
- * Author: davidblackburn
- * Created: June 02, 2014
- ********************************************************************
- * Functions and function blocks of library VarInfo
- ********************************************************************)
+(*
+ * File: VarTools.fun
+ * Copyright (c) 2023 Loupe
+ * https://loupe.team
+ * 
+ * This file is part of VarTools, licensed under the MIT License.
+ *
+ *)
 
 FUNCTION varGetInfo : UINT (*Get variable information*) (*$GROUP=User*)
 	VAR_INPUT
@@ -51,13 +49,6 @@ FUNCTION varGetVariableList : UINT (*Get a list of all local and global variable
 	VAR_INPUT
 		pVariableName : UDINT;
 		List : UDINT;
-	END_VAR
-END_FUNCTION
-
-FUNCTION varGetTaskList : UINT (*Get a list of all tasks running on the system*) (*$GROUP=User*)
-	VAR_INPUT
-		List : STRING[80];
-		size : UDINT;
 	END_VAR
 END_FUNCTION
 
