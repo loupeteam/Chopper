@@ -1,3 +1,5 @@
+1.05.1 - Make float/double to string conversion thread-safe
+
 1.05.0 - Add tslf support 
 	   - Fix some render calls not being thread-safe 
 

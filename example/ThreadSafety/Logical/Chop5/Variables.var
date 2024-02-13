@@ -1,0 +1,10 @@
+VAR
+	chopperInst : Chopper;
+	chopperOutput : STRING[4999];
+	chopperSource : STRING[4999];
+	chopperTemplate : Chop_Template_typ;
+	currentTime : LREAL;
+	diffTime : DINT;
+	startTime : DINT;
+	stop : BOOL;
+END_VAR

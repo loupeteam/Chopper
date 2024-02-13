@@ -1,0 +1,10 @@
+VAR
+	interrupt : BOOL;
+	value : LREAL;
+	iMax : UDINT;
+	i : DINT;
+	chopperInst : Chopper;
+	chopperOutput : STRING[320];
+	chopperSource : STRING[320];
+	chopperTemplate : Chop_Template_typ;
+END_VAR

@@ -19,20 +19,20 @@ extern "C"
 #endif
 #ifdef _SG3
 		#include "AsBrStr.h"
-		#include "AsBrWStr.h"
 		#include "sys_lib.h"
+		#include "AsBrWStr.h"
 		#include "stringext.h"
 #endif
 #ifdef _SG4
 		#include "AsBrStr.h"
-		#include "AsBrWStr.h"
 		#include "sys_lib.h"
+		#include "AsBrWStr.h"
 		#include "stringext.h"
 #endif
 #ifdef _SGC
 		#include "AsBrStr.h"
-		#include "AsBrWStr.h"
 		#include "sys_lib.h"
+		#include "AsBrWStr.h"
 		#include "stringext.h"
 #endif
 
@@ -174,7 +174,6 @@ _BUR_PUBLIC unsigned short varGetRealValue(unsigned long pVariable, unsigned lon
 _BUR_PUBLIC unsigned short varRefresh(unsigned long pVariable);
 _BUR_PUBLIC unsigned short varSetValue(unsigned long pVariable);
 _BUR_PUBLIC unsigned short varGetVariableList(unsigned long pVariableName, unsigned long List);
-_BUR_PUBLIC unsigned short varGetTaskList(plcstring* List, unsigned long size);
 _BUR_PUBLIC plcbit varPopulateMemberNames(plcstring* PVName, unsigned char prefix);
 
 
