@@ -31,6 +31,7 @@ FUNCTION_BLOCK Chopper
 		pSource : UDINT;
 		maxDestLength : UDINT;
 		recompile : BOOL;
+		doublePrecision : BOOL;
 	END_VAR
 	VAR_OUTPUT
 		renderLength : UDINT;

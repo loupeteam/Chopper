@@ -98,8 +98,12 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 				if(!ChopVerifyFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType)) {
 					status = CHOP_ERR_INVALID_FORMATTER + i;
 				}
-				else {
+				else if(pTemplate->doublePrecision) {
 					stringdtoa(*(LREAL*)pTemplate->snippet[i].pv.address, pTemplate->snippet[i].pv.value, 0, sizeof(pTemplate->snippet[0].pv.value));
+					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
+				}
+				else {
+					brsftoa(*(REAL*)pTemplate->snippet[i].pv.address, (UDINT)pTemplate->snippet[i].pv.value);
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				break;
@@ -108,8 +112,12 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 				if(!ChopVerifyFormatter(pTemplate->snippet[i].flags, pTemplate->snippet[i].pv.dataType)) {
 					status = CHOP_ERR_INVALID_FORMATTER+i;
 				}
-				else {
+				else if(pTemplate->doublePrecision) {
 					stringftoa(*(REAL*)pTemplate->snippet[i].pv.address, pTemplate->snippet[i].pv.value, 0, sizeof(pTemplate->snippet[0].pv.value));
+					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
+				}
+				else {
+					brsftoa(*(REAL*)pTemplate->snippet[i].pv.address, (UDINT)pTemplate->snippet[i].pv.value);
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				break;
