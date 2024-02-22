@@ -1,3 +1,8 @@
+1.05.1-custom-2 - Add optional usePrintf option to template
+
+1.05.1-custom-1 - Add optional doublePrecision option to template and Chopper FUB
+				- Default to demote LREAL to REAL when rendering
+
 1.05.1 - Make float/double to string conversion thread-safe
 
 1.05.0 - Add tslf support 
