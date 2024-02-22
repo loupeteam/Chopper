@@ -103,7 +103,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				else {
-					brsftoa(*(REAL*)pTemplate->snippet[i].pv.address, (UDINT)pTemplate->snippet[i].pv.value);
+					brsftoa((REAL)(*(LREAL*)pTemplate->snippet[i].pv.address), (UDINT)pTemplate->snippet[i].pv.value);
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				break;
