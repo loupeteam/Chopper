@@ -15,6 +15,7 @@
     <File Description="Exported functions and function blocks">Chopper.fun</File>
     <File>heap_redirect.c</File>
     <File>tlsf.h</File>
+    <File>CHANGELOG.md</File>
   </Files>
   <Dependencies>
     <Dependency ObjectName="VarTools" FromVersion="0.11.4" ToVersion="0.11.9" />
