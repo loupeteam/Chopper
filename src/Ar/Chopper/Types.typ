@@ -7,7 +7,6 @@
  * 
  *)
 
-
 TYPE
 	Chop_Status_Enum : 
 		(
@@ -25,7 +24,8 @@ TYPE
 		iSnippet : UINT;
 		source : STRING[CHOP_TEMPLATE_STRLEN_SOURCE];
 		compiled : BOOL;
-		doublePrecision: BOOL;
+		doublePrecision : BOOL;
+		usePrintf : BOOL;
 	END_STRUCT;
 	Chop_Template_Variable_typ : 	STRUCT 
 		pv : varVariable_typ;
