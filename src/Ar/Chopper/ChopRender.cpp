@@ -233,6 +233,10 @@ signed long appendTo(UDINT pdest, UDINT dsize, UDINT* poffset, UDINT psource, UD
 }
 
 
+/** postProcessRealTypeStr
+* Checks whether real-string starts with "." or "-." and adds a "0"
+* E.g. ".123" and "-.456" are converted to "0.123" and "-0.456", respectively
+*/
 signed long postProcessRealTypeStr(plcstring* buffer, unsigned long bufferSize) {
 	
 	if ((buffer == 0) || bufferSize < 2) {
