@@ -233,43 +233,40 @@ signed long appendTo(UDINT pdest, UDINT dsize, UDINT* poffset, UDINT psource, UD
 }
 
 
-postProcessRealTypeStr(plcstring* buffer, unsigned long bufferSize) {
+signed long postProcessRealTypeStr(plcstring* buffer, unsigned long bufferSize) {
 	
 	if ((buffer == 0) || bufferSize < 2) {
-		return -2;
+		// Error: Invalid inputs
+		return -1;
 	}
-
-	unsigned long lenWithNullTerm = strlen(buffer) + 1;	// Note: strlen does NOT include null termination character
-
-	if (buffer[0] == ".") {
-		if bufferSize - lenWithNullTerm >= 1 {
-			// Shift the string one position to the right to make space for '0'
-			// Starting from the end to avoid overwriting the data
-			for (int i = lenWithNullTerm; i > 0; i--) {
-				buffer[i] = buffer[i-1];
-			}
+	
+	int operation = 0;
+	if (buffer[0] == '.') 							operation = 1;	// begins with "."
+	if ((buffer[0] == '-') && (buffer[1] == '.'))	operation = 2;	// begins with "-."
+	
+	if (operation > 0) {
+		signed long lenWithNullTerm = strlen(buffer) + 1;	// Note: strlen does NOT include null termination character
+		
+		if (((signed long)bufferSize - lenWithNullTerm) < 1) {
+			// Error: Buffer too small to shift right
+			return -2;
+		}
+		
+		// Shift the string one position to the right to make space for added '0'
+		// Starting from the end to avoid overwriting the data
+		for (int i = lenWithNullTerm; i > 0; i--) {
+			buffer[i] = buffer[i-1];
+		}
+		
+		// Overwrite first character(s)
+		if (operation == 1) {
 			buffer[0] = '0';
 		}
-		else {
-			// Buffer too small to shift right
-			return -1;
+		else if (operation == 2) {
+			buffer[0] = '-';
+			buffer[1] = '0';
 		}
 	}
-	else if ((buffer[0] == '-')) && (buffer[1] == '.')) {
-		if bufferSize - lenWithNullTerm >= 1 {
-			// Shift the string one position to the right to make space for '0'
-			// Starting from the end to avoid overwriting the data
-			for (int i = lenWithNullTerm; i > 0; i--) {
-				buffer[i] = buffer[i-1];
-			}
-			buffer[0] = "-";
-			buffer[1] = "0";
-		}
-		else {
-			// Buffer too small to shift right
-			return -1;
-		}
-	}
-
+	
 	return 0;
 }
