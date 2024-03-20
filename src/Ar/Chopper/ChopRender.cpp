@@ -30,6 +30,7 @@
 
 /* ProtoTypes */
 signed long appendTo(UDINT pdest, UDINT dsize, UDINT* offset, UDINT psource, UDINT ssize);
+signed long postProcessRealTypeStr(plcstring* buffer, UDINT bufferSize);
 
 /* Renders template into pDest */
 signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT pRenderLength)
@@ -103,6 +104,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 				}
 				else if(pTemplate->doublePrecision) {
 					stringdtoa(*(LREAL*)pTemplate->snippet[i].pv.address, pTemplate->snippet[i].pv.value, 0, sizeof(pTemplate->snippet[0].pv.value));
+					postProcessRealTypeStr(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[i].pv.value));
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				else {
@@ -120,6 +122,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 				}
 				else if(pTemplate->doublePrecision) {
 					stringftoa(*(REAL*)pTemplate->snippet[i].pv.address, pTemplate->snippet[i].pv.value, 0, sizeof(pTemplate->snippet[0].pv.value));
+					postProcessRealTypeStr(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[i].pv.value));
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				else {
@@ -227,4 +230,46 @@ signed long appendTo(UDINT pdest, UDINT dsize, UDINT* poffset, UDINT psource, UD
 	}
 	
 	return CHOP_ERR_DEST_LENGTH;
+}
+
+
+postProcessRealTypeStr(plcstring* buffer, unsigned long bufferSize) {
+	
+	if ((buffer == 0) || bufferSize < 2) {
+		return -2;
+	}
+
+	unsigned long lenWithNullTerm = strlen(buffer) + 1;	// Note: strlen does NOT include null termination character
+
+	if (buffer[0] == ".") {
+		if bufferSize - lenWithNullTerm >= 1 {
+			// Shift the string one position to the right to make space for '0'
+			// Starting from the end to avoid overwriting the data
+			for (int i = lenWithNullTerm; i > 0; i--) {
+				buffer[i] = buffer[i-1];
+			}
+			buffer[0] = '0';
+		}
+		else {
+			// Buffer too small to shift right
+			return -1;
+		}
+	}
+	else if ((buffer[0] == '-')) && (buffer[1] == '.')) {
+		if bufferSize - lenWithNullTerm >= 1 {
+			// Shift the string one position to the right to make space for '0'
+			// Starting from the end to avoid overwriting the data
+			for (int i = lenWithNullTerm; i > 0; i--) {
+				buffer[i] = buffer[i-1];
+			}
+			buffer[0] = "-";
+			buffer[1] = "0";
+		}
+		else {
+			// Buffer too small to shift right
+			return -1;
+		}
+	}
+
+	return 0;
 }
