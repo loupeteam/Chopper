@@ -249,7 +249,7 @@ signed long postProcessRealTypeStr(plcstring* buffer, unsigned long bufferSize) 
 	if ((buffer[0] == '-') && (buffer[1] == '.'))	operation = 2;	// begins with "-."
 	
 	if (operation > 0) {
-		signed long lenWithNullTerm = brsstrlen((UDINT)buffer) + 1;	// Note: strlen does NOT include null termination character
+		signed long lenWithNullTerm = brsstrlen((UDINT)buffer) + 1;	// Note: brsstrlen does NOT include null termination character
 		
 		if (((signed long)bufferSize - lenWithNullTerm) < 1) {
 			// Error: Buffer too small to shift right
