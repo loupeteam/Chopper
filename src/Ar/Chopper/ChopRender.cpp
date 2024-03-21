@@ -30,6 +30,7 @@
 
 /* ProtoTypes */
 signed long appendTo(UDINT pdest, UDINT dsize, UDINT* offset, UDINT psource, UDINT ssize);
+signed long postProcessRealTypeStr(plcstring* buffer, UDINT bufferSize);
 
 /* Renders template into pDest */
 signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT pRenderLength)
@@ -103,6 +104,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 				}
 				else if(pTemplate->doublePrecision) {
 					stringdtoa(*(LREAL*)pTemplate->snippet[i].pv.address, pTemplate->snippet[i].pv.value, 0, sizeof(pTemplate->snippet[0].pv.value));
+					postProcessRealTypeStr(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[i].pv.value));
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				else {
@@ -120,6 +122,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 				}
 				else if(pTemplate->doublePrecision) {
 					stringftoa(*(REAL*)pTemplate->snippet[i].pv.address, pTemplate->snippet[i].pv.value, 0, sizeof(pTemplate->snippet[0].pv.value));
+					postProcessRealTypeStr(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[i].pv.value));
 					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				else {
@@ -227,4 +230,44 @@ signed long appendTo(UDINT pdest, UDINT dsize, UDINT* poffset, UDINT psource, UD
 	}
 	
 	return CHOP_ERR_DEST_LENGTH;
+}
+
+
+/** postProcessRealTypeStr
+* Checks whether real-string starts with "." or "-." and adds a "0"
+* E.g. ".123" and "-.456" are converted to "0.123" and "-0.456", respectively
+*/
+signed long postProcessRealTypeStr(plcstring* buffer, unsigned long bufferSize) {
+	
+	if ((buffer == 0) || bufferSize < 2) {
+		// Error: Invalid inputs
+		return -1;
+	}
+	
+	int operation = 0;
+	if (buffer[0] == '.') 							operation = 1;	// begins with "."
+	if ((buffer[0] == '-') && (buffer[1] == '.'))	operation = 2;	// begins with "-."
+	
+	if (operation > 0) {
+		signed long lenWithNullTerm = strnlen(buffer, bufferSize) + 1;	// Note: strnlen does NOT include null termination character
+		
+		if (((signed long)bufferSize - lenWithNullTerm) < 1) {
+			// Error: Buffer too small to shift right
+			return -2;
+		}
+		
+		// Shift the string one position to the right to make space for added '0'
+		memmove(&buffer[1], &buffer[0], lenWithNullTerm);	// Note: 'memmove' allows src and dest memory areas to overlap
+		
+		// Overwrite first character(s)
+		if (operation == 1) {
+			buffer[0] = '0';
+		}
+		else if (operation == 2) {
+			buffer[0] = '-';
+			buffer[1] = '0';
+		}
+	}
+	
+	return 0;
 }
