@@ -257,10 +257,7 @@ signed long postProcessRealTypeStr(plcstring* buffer, unsigned long bufferSize) 
 		}
 		
 		// Shift the string one position to the right to make space for added '0'
-		// Starting from the end to avoid overwriting the data
-		for (int i = lenWithNullTerm; i > 0; i--) {
-			buffer[i] = buffer[i-1];
-		}
+		memmove(&buffer[1], &buffer[0], lenWithNullTerm);	// Note: 'memmove' allows src and dest memory areas to overlap
 		
 		// Overwrite first character(s)
 		if (operation == 1) {
