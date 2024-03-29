@@ -1,3 +1,5 @@
+1.05.1-custom-4 - Fix bug in which some REALS and LREALS were not being rendered
+
 1.05.1-custom-3 - Add pre-decimal zero with post-processing for double-precision real-types
 
 1.05.1-custom-2 - Add optional usePrintf option to template

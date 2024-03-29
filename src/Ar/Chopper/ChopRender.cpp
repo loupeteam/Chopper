@@ -101,6 +101,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 				}
 				else if(pTemplate->usePrintf) {
 					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(LREAL*)pTemplate->snippet[i].pv.address);
+					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				else if(pTemplate->doublePrecision) {
 					stringdtoa(*(LREAL*)pTemplate->snippet[i].pv.address, pTemplate->snippet[i].pv.value, 0, sizeof(pTemplate->snippet[0].pv.value));
@@ -119,6 +120,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 				}
 				else if(pTemplate->usePrintf) {
 					snprintf(pTemplate->snippet[i].pv.value, sizeof(pTemplate->snippet[0].pv.value), pTemplate->snippet[i].flags, *(REAL*)pTemplate->snippet[i].pv.address);
+					status = appendTo(pDest, maxDestLength, &offset, (UDINT)&pTemplate->snippet[i].pv.value, strlen(pTemplate->snippet[i].pv.value));
 				}
 				else if(pTemplate->doublePrecision) {
 					stringftoa(*(REAL*)pTemplate->snippet[i].pv.address, pTemplate->snippet[i].pv.value, 0, sizeof(pTemplate->snippet[0].pv.value));
