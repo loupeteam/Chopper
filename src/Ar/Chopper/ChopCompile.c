@@ -64,6 +64,7 @@ signed long ChopCompileGeneric(UDINT _pTemplate, UDINT pSource)
 	if(pTemplate->snippet == 0 || pTemplate->source == 0) return CHOP_ERR_INVALID_TEMPLATE_VALUES;
 	
 	pTemplate->iSnippet = 0; 
+	pTemplate->sourceLen = 0;
 	pTemplate->compiled = 0;
 	
 	UINT sourceLen;
@@ -76,6 +77,7 @@ signed long ChopCompileGeneric(UDINT _pTemplate, UDINT pSource)
 		if(sourceLen < pTemplate->maxSrcLen) {
 			memcpy(pTemplate->source, (void*)pSource, sourceLen);
 			((char*)pTemplate->source)[sourceLen] = '\0';
+			pTemplate->sourceLen = sourceLen;
 		}
 		else {
 			return CHOP_ERR_SOURCE_LENGTH;	

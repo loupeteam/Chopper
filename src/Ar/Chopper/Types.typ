@@ -31,6 +31,7 @@ TYPE
 		maxSrcLen : UDINT;
 		source : REFERENCE TO STRING[CHOP_TEMPLATE_STRLEN_SOURCE];
 		iSnippet : UDINT;
+		sourceLen : UDINT;
 		compiled : BOOL;
 		doublePrecision : BOOL;
 		usePrintf : BOOL;
