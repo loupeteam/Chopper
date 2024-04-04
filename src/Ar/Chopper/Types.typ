@@ -19,10 +19,18 @@ TYPE
 		CHOP_ERR_INTERNAL,
 		CHOP_ERR_INVALID_FORMATTER := 51000 (*51XXX Invalid variable format XXX represents the index of the variable *)
 		);
-	Chop_Template_typ : 	STRUCT 
+	Chop_Template_typ :Chop_Template_Static_typ;
+	Chop_Template_Static_typ : 	STRUCT 
+		header : Chop_Template_Generic_typ;
 		snippet : ARRAY[0..CHOP_TEMPLATE_MAI_VARIABLES]OF Chop_Template_Variable_typ;
-		iSnippet : UINT;
 		source : STRING[CHOP_TEMPLATE_STRLEN_SOURCE];
+	END_STRUCT;
+	Chop_Template_Generic_typ : 	STRUCT 
+		maxSnippets : UDINT;
+		snippet : REFERENCE TO Chop_Template_Variable_typ;
+		maxSrcLen : UDINT;
+		source : REFERENCE TO STRING[CHOP_TEMPLATE_STRLEN_SOURCE];
+		iSnippet : UDINT;
 		compiled : BOOL;
 		doublePrecision : BOOL;
 		usePrintf : BOOL;

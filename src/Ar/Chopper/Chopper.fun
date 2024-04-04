@@ -15,6 +15,13 @@ FUNCTION ChopCompile : DINT
 	END_VAR
 END_FUNCTION
 
+FUNCTION ChopCompileGeneric : DINT
+	VAR_INPUT
+		pTemplate : UDINT; (*Address of Chop_Template_Generic_typ Template*)
+		pSource : UDINT; (*Address of Source. Must not change after compilation, if changed then a recompile must take place before rendering *)
+	END_VAR
+END_FUNCTION
+
 FUNCTION ChopRender : DINT
 	VAR_INPUT
 		pDest : UDINT;

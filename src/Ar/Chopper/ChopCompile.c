@@ -36,26 +36,46 @@
 
 #define min(X, Y) (((X) < (Y)) ? (X) : (Y))
 
+signed long ChopCompile(UDINT _pTemplate, UDINT pSource) {
+	if(_pTemplate == 0 || pSource == 0) return CHOP_ERR_INVALID_INPUT;
+	
+	Chop_Template_Static_typ* pTemplate = (Chop_Template_Static_typ*) _pTemplate;
+	
+	if(pTemplate->header.snippet == 0) {
+		pTemplate->header.maxSnippets = sizeof(pTemplate->snippet) / sizeof(pTemplate->snippet[0]);
+		pTemplate->header.snippet = pTemplate->snippet;
+	}
+	
+	if(pTemplate->header.source == 0) {
+		pTemplate->header.maxSrcLen = sizeof(pTemplate->source) - 1;
+		pTemplate->header.source = &pTemplate->source;
+	}
+	
+	return ChopCompileGeneric((UDINT)pTemplate, pSource);
+} 
+
 /* Parses string into template */
-signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
+signed long ChopCompileGeneric(UDINT _pTemplate, UDINT pSource)
 {
 	if(_pTemplate == 0 || pSource == 0) return CHOP_ERR_INVALID_INPUT;
 	
-	// TODO: Consider memset pTemplate to 0 here 
-	Chop_Template_typ* pTemplate = (Chop_Template_typ*)_pTemplate;
+	Chop_Template_Generic_typ* pTemplate = (Chop_Template_Generic_typ*)_pTemplate;
+	
+	if(pTemplate->snippet == 0 || pTemplate->source == 0) return CHOP_ERR_INVALID_TEMPLATE_VALUES;
+	
 	pTemplate->iSnippet = 0; 
 	pTemplate->compiled = 0;
 	
 	UINT sourceLen;
 	
 	// Get Source String
-	if( ((UDINT)&(pTemplate->source)) != pSource) { //Dont copy if we are already using source in template
+	if( ((UDINT)(pTemplate->source)) != pSource) { //Dont copy if we are already using source in template
 		sourceLen = strlen((char*)pSource);
 		
 		// Check sources will fit into template's source
-		if(sourceLen < sizeof(pTemplate->source)) {
+		if(sourceLen < pTemplate->maxSrcLen) {
 			memcpy(pTemplate->source, (void*)pSource, sourceLen);
-			pTemplate->source[sourceLen] = '\0';
+			((char*)pTemplate->source)[sourceLen] = '\0';
 		}
 		else {
 			return CHOP_ERR_SOURCE_LENGTH;	
@@ -106,7 +126,7 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 			prefixLen = prefixEnd - prefixStart;
 			
 			// Check space in template
-			if(pTemplate->iSnippet >= CHOP_TEMPLATE_MAX_VARIABLES)
+			if(pTemplate->iSnippet >= pTemplate->maxSnippets)
 				return CHOP_ERR_TEMPLATE_FULL;
 			
 			// --- Save variable ---
@@ -156,7 +176,7 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource)
 	
 	//if(prefixData) {
 	// Check for Cache full
-	if(pTemplate->iSnippet >= CHOP_TEMPLATE_MAX_VARIABLES)
+	if(pTemplate->iSnippet >= pTemplate->maxSnippets)
 		return CHOP_ERR_TEMPLATE_FULL;
 
 	// Copy Trailing string after last var

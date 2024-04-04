@@ -30,7 +30,7 @@ signed long ChopReplace(UDINT _pTemplate, UDINT pTag, UDINT Address, UDINT Type)
 		return CHOP_ERR_INVALID_INPUT;
 	}
 	
-	Chop_Template_typ* pTemplate = (Chop_Template_typ*)_pTemplate;
+	Chop_Template_Generic_typ* pTemplate = (Chop_Template_typ*)_pTemplate;
 	int i;
 	
 	for(i = 0; i < pTemplate->iSnippet; i++) {

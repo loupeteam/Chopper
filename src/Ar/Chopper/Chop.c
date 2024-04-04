@@ -33,14 +33,14 @@ void Chopper(struct Chopper* t)
 	}
 	
 	// Compile to Template
-	if( ((((Chop_Template_typ*)t->pTemplate)->compiled == 0) && (t->compileStatus == 0))
+	if( ((((Chop_Template_Generic_typ*)t->pTemplate)->compiled == 0) && (t->compileStatus == 0))
 	|| t->recompile) {
 		
 		// Compile
 		t->compileStatus = ChopCompile(t->pTemplate, t->pSource);
 		
 		// Enable double precision if specified
-		if(t->pTemplate && t->doublePrecision) ((Chop_Template_typ*)t->pTemplate)->doublePrecision = 1;
+		if(t->pTemplate && t->doublePrecision) ((Chop_Template_Generic_typ*)t->pTemplate)->doublePrecision = 1;
 		
 		// Reset ReCompile CMD
 		t->recompile = 0;

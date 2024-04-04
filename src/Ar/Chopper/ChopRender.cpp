@@ -37,7 +37,7 @@ signed long ChopRender(UDINT pDest, UDINT _pTemplate, UDINT maxDestLength, UDINT
 {
 	if((_pTemplate == 0) || (pDest == 0) || (maxDestLength == 0)) return CHOP_ERR_INVALID_INPUT;
 	
-	Chop_Template_typ* pTemplate = (Chop_Template_typ*) _pTemplate;
+	Chop_Template_Generic_typ* pTemplate = (Chop_Template_Generic_typ*) _pTemplate;
 	UDINT offset = 0, i;
 	DINT status = 0;
 	
