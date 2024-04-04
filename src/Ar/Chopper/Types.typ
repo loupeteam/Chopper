@@ -22,7 +22,7 @@ TYPE
 		);
 	Chop_Template_typ :Chop_Template_Static_typ;
 	Chop_Template_Static_typ : 	STRUCT 
-		header : Chop_Template_Generic_typ;
+		generic : Chop_Template_Generic_typ;
 		snippet : ARRAY[0..CHOP_TEMPLATE_MAI_VARIABLES]OF Chop_Template_Variable_typ;
 		source : STRING[CHOP_TEMPLATE_STRLEN_SOURCE];
 	END_STRUCT;

@@ -41,14 +41,14 @@ signed long ChopCompile(UDINT _pTemplate, UDINT pSource) {
 	
 	Chop_Template_Static_typ* pTemplate = (Chop_Template_Static_typ*) _pTemplate;
 	
-	if(pTemplate->header.snippet == 0) {
-		pTemplate->header.maxSnippets = sizeof(pTemplate->snippet) / sizeof(pTemplate->snippet[0]);
-		pTemplate->header.snippet = pTemplate->snippet;
+	if(pTemplate->generic.snippet == 0) {
+		pTemplate->generic.maxSnippets = sizeof(pTemplate->snippet) / sizeof(pTemplate->snippet[0]);
+		pTemplate->generic.snippet = pTemplate->snippet;
 	}
 	
-	if(pTemplate->header.source == 0) {
-		pTemplate->header.maxSrcLen = sizeof(pTemplate->source) - 1;
-		pTemplate->header.source = &pTemplate->source;
+	if(pTemplate->generic.source == 0) {
+		pTemplate->generic.maxSrcLen = sizeof(pTemplate->source) - 1;
+		pTemplate->generic.source = &pTemplate->source;
 	}
 	
 	return ChopCompileGeneric((UDINT)pTemplate, pSource);
