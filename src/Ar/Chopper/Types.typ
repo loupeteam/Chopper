@@ -11,11 +11,12 @@ TYPE
 	Chop_Status_Enum : 
 		(
 		CHOP_ERR_INVALID_INPUT := 50000,
+		CHOP_ERR_INVALID_TEMPLATE_VALUES,
 		CHOP_ERR_SOURCE_LENGTH,
 		CHOP_ERR_TEMPLATE_FULL,
 		CHOP_ERR_NO_END_OF_VAR, (*Check source vars are surrounded by '{{}}'*)
-		CHOP_ERR_NOT_COMPILED,
-		CHOP_ERR_DEST_LENGTH, (*50005*)
+		CHOP_ERR_NOT_COMPILED, (*50005*)
+		CHOP_ERR_DEST_LENGTH,
 		CHOP_ERR_INTERNAL,
 		CHOP_ERR_INVALID_FORMATTER := 51000 (*51XXX Invalid variable format XXX represents the index of the variable *)
 		);
