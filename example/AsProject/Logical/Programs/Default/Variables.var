@@ -1,8 +1,22 @@
-
 VAR
-
-END_VAR
-
-VAR CONSTANT
-
+	renderStatusDynamic : DINT;
+	renderStatusLegacy : DINT;
+	renderStatusStatic : DINT;
+	compileStatusDynamic : DINT;
+	compileStatusLegacy : DINT;
+	compileStatusStatic : DINT;
+	cmd : Cmd_typ;
+	sourceDynamic : STRING[10000];
+	sourceLegacy : STRING[10000];
+	sourceStatic : STRING[10000];
+	snippetDynamic : ARRAY[0..99] OF Chop_Template_Variable_typ;
+	templateDynamic : Chop_Template_Generic_typ;
+	templateLegacy : Chop_Template_typ;
+	templateStatic : Chop_Template_Static_typ;
+	destDynamic : STRING[1000];
+	destLegacy : STRING[1000];
+	destStatic : STRING[1000];
+	renderLenDynamic : UDINT;
+	renderLenLegacy : UDINT;
+	renderLenStatic : UDINT;
 END_VAR
