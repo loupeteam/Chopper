@@ -14,4 +14,4 @@
 
 #include <stddef.h>
 
-__attribute__((weak,visibility("hidden"))) size_t bur_heap_size = 0; /* variable 'bur_heap_size' as dummy */
+size_t bur_heap_size = 0xffff; /* variable 'bur_heap_size' as dummy */
