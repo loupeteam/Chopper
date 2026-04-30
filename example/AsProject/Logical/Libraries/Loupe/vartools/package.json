@@ -1,12 +1,12 @@
 {
   "name": "@loupeteam/vartools",
-  "version": "0.11.4",
-  "description": "Loupe's vartools library for Automation Runtime",
-  "homepage": "https://loupeteam.github.io/Sandbox/libraries/vartools.html",
+  "version": "1.0.0",
+  "description": "Helper library for getting and setting variable values in B&R Automation Studio",
+  "homepage": "https://loupeteam.github.io/LoupeDocs/libraries/vartools.html",
   "scripts": {},
   "keywords": [],
   "author": "Loupe",
-  "license": "Loupe Software License Agreement",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/loupeteam/vartools"
@@ -15,6 +15,6 @@
     "type": "library"
   },
   "dependencies": {
-    "@loupeteam/stringext": ">=0.14.0 <=0.14.9"
+    "@loupeteam/stringext": "*"
   }
 }

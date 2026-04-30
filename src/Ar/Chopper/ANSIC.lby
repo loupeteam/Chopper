@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?AutomationStudio FileVersion="4.9"?>
-<Library Version="1.05.1" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
+<Library Version="1.0.0" SubType="ANSIC" xmlns="http://br-automation.co.at/AS/Library">
   <Files>
+    <File Description="Exported functions and function blocks">Chopper.fun</File>
     <File Description="Exported data types">Types.typ</File>
     <File Description="Exported constants">Constants.var</File>
     <File Description="Compile template">ChopCompile.c</File>
@@ -12,12 +13,10 @@
     <File>Internal.h</File>
     <File>ChopGetErrorMsg.c</File>
     <File>ChopGetPrintFlag.c</File>
-    <File Description="Exported functions and function blocks">Chopper.fun</File>
-    <File>heap_redirect.c</File>
-    <File>tlsf.h</File>
+    <File>heap.c</File>
   </Files>
   <Dependencies>
-    <Dependency ObjectName="VarTools" FromVersion="0.11.4" ToVersion="0.11.9" />
-    <Dependency ObjectName="stringext" FromVersion="0.15.0" ToVersion="0.15.9" />
+    <Dependency ObjectName="VarTools" FromVersion="1.0.0" />
+    <Dependency ObjectName="stringext" FromVersion="1.0.0" />
   </Dependencies>
 </Library>
